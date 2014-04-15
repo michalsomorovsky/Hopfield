@@ -13,6 +13,7 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
+					<Add directory="include" />
 				</Compiler>
 			</Target>
 			<Target title="Release">
@@ -22,6 +23,7 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O2" />
+					<Add directory="include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -31,8 +33,16 @@
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
+			<Add option="`pkg-config --cflags gtk+-3.0 `" />
 		</Compiler>
+		<Linker>
+			<Add option="`pkg-config --libs gtk+-3.0`" />
+		</Linker>
+		<Unit filename="include/Net.h" />
+		<Unit filename="include/Neuron.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="src/Net.cpp" />
+		<Unit filename="src/Neuron.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />

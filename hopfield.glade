@@ -9,7 +9,49 @@
     </columns>
     <data>
       <row>
-        <col id="0" translatable="yes">poipo</col>
+        <col id="0" translatable="yes">A</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">B</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">C</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">D</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">E</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">F</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">G</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">H</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">I</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">J</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">K</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">L</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">M</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">N</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">O</col>
       </row>
     </data>
   </object>
@@ -175,10 +217,11 @@
             </child>
             <child>
               <object class="GtkButton" id="button2">
-                <property name="label" translatable="yes">button</property>
+                <property name="label" translatable="yes">Trenovanie</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
+                <signal name="clicked" handler="on_button2_clicked" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">False</property>
