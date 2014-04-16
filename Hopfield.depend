@@ -1,9 +1,12 @@
 # depslib dependency file v1.0
-1397488151 source:c:\users\m.somorovsky\documents\cbprojects\hopfield\main.cpp
+1397661233 source:c:\users\m.somorovsky\documents\cbprojects\hopfield\main.cpp
 	<iostream>
 	<gtk/gtk.h>
 	"Neuron.h"
 	"Net.h"
+	<math.h>
+	<stdlib.h>
+	<algorithm>
 
 1379768118 c:\gtk32\include\gtk-3.0\gtk\gtk.h
 	<gdk/gdk.h>
