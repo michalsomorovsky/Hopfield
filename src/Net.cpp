@@ -15,6 +15,7 @@ Net::Net(int dimensions)
 
 Net::~Net()
 {
+    m_Neurons.clear();
     //dtor
 }
 
