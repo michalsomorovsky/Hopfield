@@ -5,6 +5,7 @@
 #include <math.h>
 #include <stdlib.h>
 #include <algorithm>
+#include <fstream>
 
 using namespace std;
 
@@ -30,6 +31,7 @@ struct
                           "183F7FFF2783C1E0F0783", "183E1F8F6793CDE3F0F83", "7C3E60F0783C1E0CF87C", "1FCFE60F07FCFE6030180", "1FCFE60F07FCFE60F0783", "7F3FE03007C0180FF9FC",
                           "1FFFF8402010080402010", "183C1E0F0783C1E0CF87C", "183C1E0F0783773B87038", "183C19B0D810361B30783", "183C19B0D810080402010", "1FFFF818183830303FFFF"
                         };
+    string pismena[24] = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "R", "S", "T", "U", "V", "X", "Y", "Z" };
 } letters;
 
 vector<int> selectedLetter;
@@ -426,6 +428,44 @@ string hexstringtobinstring(string hex)
 //main loop
 int main(int argc, char *argv[])
 {
+    string cislo1;
+    string cislo2;
+    int rozdiel;
+    ofstream data81 ("data81.txt");
+    if(data81.is_open())
+    {
+        data81<<" ;";
+        for(int i=0; i<24; i++)
+        {
+            data81<<letters.pismena[i]<<";";
+        }
+        data81<<endl;
+
+        for(int i=0; i<24; i++)
+        {
+            cislo1 = hexstringtobinstring(letters.data81[i]);
+            data81<<letters.pismena[i]<<";";
+            for(int j=0; j<24; j++)
+            {
+                rozdiel = 0;
+                cislo2 = hexstringtobinstring(letters.data81[j]);
+                cout<<i<<" - "<<j<<": ";
+                for(int k=0; k<81; k++)
+                {
+                    /*if(cislo1[k]==cislo2[k]) cout<<"0";
+                    else cout<<"1";*/
+                    if(cislo1[k]!=cislo2[k]) rozdiel++;
+                }
+                cout<<rozdiel<<endl;
+                data81<<rozdiel<<";";
+            }
+            data81<<endl;
+        }
+    }
+
+
+
+
     GtkBuilder      *builder;
     GtkWidget       *window;
 
