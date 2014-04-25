@@ -5,7 +5,12 @@
 #include <math.h>
 #include <stdlib.h>
 #include <algorithm>
-#include <fstream>
+
+#ifdef WIN32
+#define DLLEXPORT __declspec(dllexport)
+#else
+#define DLLEXPORT
+#endif // WIN32
 
 using namespace std;
 
@@ -17,21 +22,23 @@ struct
 
 struct
 {
+    //data for 5x5 network from A to Z
     string data25[24] = { "4547F1", "1E8FA3E", "F8420F", "1E8C63E", "1F87A1F", "1F87A10", "F85E2F", "118FE31", "421084", "1F0862E",
                           "1197251", "108421F", "1BAC631", "11CD671", "E8C62E", "1E8FA10", "1E8FA31", "F8383E", "1F21084", "118C62E",
                           "118C544", "1151151", "1151084", "1F1111F"
                         };
+    //data for 7x7 network from A to Z
     string data49[24] = { "71B36C7FFFE3", "1F3FE3F98FFFC", "FFFE0C183FBF", "1FBFE3C78FFFE", "1FFFE0FD83FFF", "1FFFE0FD83060",
                           "FFFE0DF8FFBF", "18F1E3FF8F1E3", "204081020408", "1FFF83078FFBE", "18F36CF1B3363", "183060C183FFF", "18FBFFD78F1E3",
                           "18F9FBD7BF3E3", "FBFE3C78FFBE", "1FBFE3FFFB060", "1FBFE3FFFB1E3", "FFFE07C0FFFE", "1FFF881020408", "18F1E3C78FFBE",
                           "18F1E3C6D9B1C", "18FB9C1073BE3", "18FBBE3820408", "1FFF8638C3FFF"
                         };
+    //data for 9x9 network from A to Z
     string data81[24] = { "381C3B9DD83FFFFF0783", "1FCFE60F07FCC1E0FF9FC", "7F3FE030180C0600FE7F", "1FCFE60F0783C1E0FF9FC", "1FFFFE0301FCC0603FFFF", "1FFFFE0301FCC06030180",
                           "7F3FE03019FC1E0CFE7F", "183C1E0F07FFFFE0F0783", "10080402010080402010", "1FFFF80C0783C1E0CF87C", "183C3E7BF1E0FC67B0F83", "180C06030180C0603FFFF",
                           "183F7FFF2783C1E0F0783", "183E1F8F6793CDE3F0F83", "7C3E60F0783C1E0CF87C", "1FCFE60F07FCFE6030180", "1FCFE60F07FCFE60F0783", "7F3FE03007C0180FF9FC",
                           "1FFFF8402010080402010", "183C1E0F0783C1E0CF87C", "183C1E0F0783773B87038", "183C19B0D810361B30783", "183C19B0D810080402010", "1FFFF818183830303FFFF"
                         };
-    string pismena[24] = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "R", "S", "T", "U", "V", "X", "Y", "Z" };
 } letters;
 
 vector<int> selectedLetter;
@@ -45,7 +52,7 @@ vector< int >  random_damage(int max_rand, int how_many);
 string hexstringtobinstring(string hex);
 
 //create network
-extern "C" __declspec(dllexport)
+extern "C" DLLEXPORT //__declspec(dllexport)
 void on_button1_clicked(GtkWidget *widget, gpointer data)
 {
     GtkBuilder *builder = GTK_BUILDER(data);
@@ -82,7 +89,7 @@ void on_button1_clicked(GtkWidget *widget, gpointer data)
 }
 
 //train network
-extern "C" __declspec(dllexport)
+extern "C" DLLEXPORT //__declspec(dllexport)
 void on_button2_clicked(GtkWidget *widget, gpointer data)
 {
     GtkBuilder *builder = GTK_BUILDER(data);
@@ -148,7 +155,7 @@ void on_button2_clicked(GtkWidget *widget, gpointer data)
 }
 
 //test network
-extern "C" __declspec(dllexport)
+extern "C" DLLEXPORT //__declspec(dllexport)
 void on_button3_clicked(GtkWidget *widget, gpointer data)
 {
     GtkBuilder *builder = GTK_BUILDER(data);
@@ -194,7 +201,7 @@ draw_letter (GtkWidget *da,
 }
 
 //redraw selected letter from treeview
-extern "C" __declspec(dllexport)
+extern "C" DLLEXPORT //__declspec(dllexport)
 void on_treeview3_cursor_changed (GtkTreeView *tree_view,
                                   gpointer     data)
 {
@@ -336,7 +343,7 @@ vector< int >  random_damage(int max_rand, int how_many)
 }
 
 //changing size of network. new network has to be created
-extern "C" __declspec(dllexport)
+extern "C" DLLEXPORT //__declspec(dllexport)
 void on_radiobutton1_toggled (GtkToggleButton *togglebutton, gpointer data)
 {
     GtkBuilder *builder = GTK_BUILDER(data);
@@ -351,7 +358,7 @@ void on_radiobutton1_toggled (GtkToggleButton *togglebutton, gpointer data)
 }
 
 //changing a damage of letter
-extern "C" __declspec(dllexport)
+extern "C" DLLEXPORT //__declspec(dllexport)
 void on_radiobutton4_toggled (GtkToggleButton *togglebutton, gpointer data)
 {
     GtkBuilder *builder = GTK_BUILDER(data);
@@ -428,44 +435,6 @@ string hexstringtobinstring(string hex)
 //main loop
 int main(int argc, char *argv[])
 {
-    string cislo1;
-    string cislo2;
-    int rozdiel;
-    ofstream data81 ("data81.txt");
-    if(data81.is_open())
-    {
-        data81<<" ;";
-        for(int i=0; i<24; i++)
-        {
-            data81<<letters.pismena[i]<<";";
-        }
-        data81<<endl;
-
-        for(int i=0; i<24; i++)
-        {
-            cislo1 = hexstringtobinstring(letters.data81[i]);
-            data81<<letters.pismena[i]<<";";
-            for(int j=0; j<24; j++)
-            {
-                rozdiel = 0;
-                cislo2 = hexstringtobinstring(letters.data81[j]);
-                cout<<i<<" - "<<j<<": ";
-                for(int k=0; k<81; k++)
-                {
-                    /*if(cislo1[k]==cislo2[k]) cout<<"0";
-                    else cout<<"1";*/
-                    if(cislo1[k]!=cislo2[k]) rozdiel++;
-                }
-                cout<<rozdiel<<endl;
-                data81<<rozdiel<<";";
-            }
-            data81<<endl;
-        }
-    }
-
-
-
-
     GtkBuilder      *builder;
     GtkWidget       *window;
 

@@ -11,7 +11,7 @@ class Net
         vector < Neuron* > GetNeurons() { return m_Neurons; }
         void SetNeurons(vector < Neuron* > val) { m_Neurons = val; }
         void train(vector < vector < int > > trainning_set);
-        void stateUpdate(int neuron);
+        int stateUpdate(int neuron);
         void test(vector < int > test_set);
         int getSize() { return m_Neurons.size(); }
     protected:

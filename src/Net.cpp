@@ -1,6 +1,8 @@
 #include "Net.h"
 #include "Neuron.h"
 #include <iostream>
+#include <algorithm>
+#include <time.h>
 
 using namespace std;
 
@@ -15,21 +17,36 @@ Net::Net(int dimensions)
 
 Net::~Net()
 {
-    m_Neurons.clear();
     //dtor
 }
 
-void Net::stateUpdate(int j)
+int Net::stateUpdate(int j)
 {
     double newState = 0;
+    int change;
     for(int i=0; i < m_Neurons.size(); i++)
     {
-        //cout<<m_Neurons[i]->getState()<<" * "<<m_Neurons[j]->getWeight(i)<<endl;
         newState += m_Neurons[i]->getState() * m_Neurons[j]->getWeight(i);
     }
-    //cout<<"Neuron "<<j<<" : "<<newState<<endl;
-    if(newState>0) m_Neurons[j]->setState(1);
-    else return m_Neurons[j]->setState(-1);
+    if(newState>0)
+    {
+        if(m_Neurons[j]->getState() == 1) change =0;
+        else
+        {
+            change=1;
+            m_Neurons[j]->setState(1);
+        }
+    }
+    else
+    {
+        if(m_Neurons[j]->getState() == -1) change =0;
+        else
+        {
+            change=1;
+            m_Neurons[j]->setState(-1);
+        }
+    }
+    return change;
 }
 
 void Net::train(vector < vector < int > > trainning_set)
@@ -58,11 +75,16 @@ void Net::test(vector < int > test_set)
     for(int i=0; i<m_Neurons.size(); i++)
     {
         m_Neurons[i]->setState(test_set[i]);
-        //cout<<"Testset : "<<test_set[i]<<endl;
-        //cout<<"State : "<<m_Neurons[i]->getState()<<endl;
     }
-    for(int i=0; i<m_Neurons.size(); i++)
+    int changes;
+    srand(time(NULL));
+    do
     {
-        stateUpdate(i);
+        changes = 0;
+        for(int k=0, i=rand() % (m_Neurons.size()); k<m_Neurons.size(); i=rand() % (m_Neurons.size()), k++)
+        {
+            changes += stateUpdate(i);
+        }
     }
+    while(changes != 0);
 }
